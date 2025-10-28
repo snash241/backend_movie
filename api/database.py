@@ -16,9 +16,16 @@ engine = create_engine(
     )
 
 # Define a session local class which will be used to create sessions
-
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Define the base class for declarative models
-
 Base = declarative_base()
+
+# tester le code avec la connexion
+if __name__ == "__main__":
+    try:
+        # Try to connect to the database
+        with engine.connect() as connection:
+            print("Database connection successful.")
+    except Exception as e:
+        print(f"Database connection failed: {e}")

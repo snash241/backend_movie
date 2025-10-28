@@ -1,22 +1,20 @@
-""" SQLAlchemy models. """
+"""SQLAlchemy models"""
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship # permet des relations de clé étrangère entre les tables.
 from database import Base
 
-
-# Define the Movie model
 class Movie(Base):
     __tablename__ = "movies"
 
     movieId = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     genres = Column(String)
+
     ratings = relationship("Rating", back_populates="movie", cascade="all, delete")
     tags = relationship("Tag", back_populates="movie", cascade="all, delete")
-    links = relationship("Link", back_populates="movie", uselist=False, cascade="all, delete")
+    link = relationship("Link", back_populates="movie", uselist=False, cascade="all, delete")
 
-
-# Define the Rating model
+    
 class Rating(Base):
     __tablename__ = "ratings"
 
@@ -27,7 +25,7 @@ class Rating(Base):
 
     movie = relationship("Movie", back_populates="ratings")
 
-# Define the Tag model
+
 class Tag(Base):
     __tablename__ = "tags"
 
@@ -38,7 +36,7 @@ class Tag(Base):
 
     movie = relationship("Movie", back_populates="tags")
 
-# Define the Link model
+
 class Link(Base):
     __tablename__ = "links"
 
